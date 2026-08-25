@@ -1,0 +1,2623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Privacy Policy | LensCraft</title>
+
+  <meta
+    name="description"
+    content="Privacy Policy for LensCraft, a browser extension that provides a circular magnifying lens overlay for selected text using a right-click context menu action."
+  >
+
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --paper: #ffffff;
+      --ink: #161a20;
+      --muted: #68717d;
+      --line: #dfe4e8;
+
+      --blue: #3579e8;
+      --blue-soft: #eaf2ff;
+
+      --cyan: #58b9c8;
+      --cyan-soft: #e8f7f9;
+
+      --indigo: #6d66d9;
+      --indigo-soft: #efedff;
+
+      --dark: #171b21;
+      --dark-soft: #22272f;
+
+      --glow: rgba(75, 146, 255, 0.34);
+
+      --radius: 20px;
+      --shadow: 0 20px 60px rgba(39, 48, 61, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(
+          circle at 10% 0%,
+          rgba(53, 121, 232, 0.08),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 92% 12%,
+          rgba(88, 185, 200, 0.08),
+          transparent 26%
+        ),
+        var(--bg);
+      color: var(--ink);
+      font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+      line-height: 1.75;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1360px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    /* =====================================
+       TOP BAR
+       ===================================== */
+
+    .topbar {
+      background: var(--dark);
+      color: white;
+    }
+
+    .topbar-inner {
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-symbol {
+      position: relative;
+      width: 41px;
+      height: 41px;
+      border: 3px solid #79b2ff;
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 13px rgba(121, 178, 255, 0.18),
+        0 0 18px rgba(121, 178, 255, 0.20);
+    }
+
+    .brand-symbol::after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 4px;
+      right: -12px;
+      bottom: 0;
+      border-radius: 5px;
+      background: #79b2ff;
+      transform: rotate(43deg);
+      transform-origin: left center;
+    }
+
+    .top-meta {
+      color: #8b94a1;
+      font-size: 12px;
+    }
+
+    /* =====================================
+       HERO
+       ===================================== */
+
+    .hero {
+      padding: 72px 0 58px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 470px;
+      gap: 62px;
+      align-items: center;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      padding: 7px 13px;
+      border: 1px solid #dce1e7;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.70);
+      color: #626c78;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-label::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 15px var(--glow);
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 790px;
+      font-size: clamp(52px, 8vw, 96px);
+      line-height: 0.93;
+      letter-spacing: -0.065em;
+    }
+
+    .hero h1 span {
+      color: var(--blue);
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 28px;
+    }
+
+    .hero-tags span {
+      padding: 8px 11px;
+      border: 1px solid #dde2e7;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.72);
+      color: #747d89;
+      font-size: 11px;
+    }
+
+    /* =====================================
+       LENS PREVIEW
+       ===================================== */
+
+    .lens-stage {
+      position: relative;
+      min-height: 430px;
+      overflow: hidden;
+      border: 1px solid #dde2e8;
+      border-radius: 28px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .lens-stage-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--line);
+      background: #fafbfc;
+    }
+
+    .lens-stage-head strong {
+      color: #505967;
+      font-size: 12px;
+    }
+
+    .lens-stage-head span {
+      color: #9299a4;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .page-preview {
+      position: relative;
+      height: 355px;
+      overflow: hidden;
+      padding: 38px;
+      background:
+        linear-gradient(
+          180deg,
+          #ffffff,
+          #f6f8fa
+        );
+    }
+
+    .mock-line {
+      height: 10px;
+      margin-bottom: 14px;
+      border-radius: 5px;
+      background: #e4e8ed;
+    }
+
+    .mock-line:nth-child(1) {
+      width: 77%;
+    }
+
+    .mock-line:nth-child(2) {
+      width: 88%;
+    }
+
+    .mock-line:nth-child(3) {
+      width: 63%;
+    }
+
+    .mock-line:nth-child(4) {
+      width: 82%;
+    }
+
+    .mock-line:nth-child(5) {
+      width: 70%;
+    }
+
+    .selected-text {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: #dce9ff;
+      color: #355a8d;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .lens {
+      position: absolute;
+      right: 54px;
+      bottom: 44px;
+      width: 190px;
+      height: 190px;
+      display: grid;
+      place-items: center;
+      border: 8px solid rgba(255,255,255,0.95);
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle,
+          rgba(255,255,255,0.98),
+          rgba(238,247,255,0.92)
+        );
+      box-shadow:
+        0 0 0 3px rgba(53,121,232,0.45),
+        0 0 0 11px rgba(53,121,232,0.08),
+        0 20px 45px rgba(42,75,111,0.25),
+        0 0 32px rgba(53,121,232,0.22);
+    }
+
+    .lens::after {
+      content: "";
+      position: absolute;
+      width: 92px;
+      height: 14px;
+      right: -70px;
+      bottom: -27px;
+      border-radius: 9px;
+      background:
+        linear-gradient(
+          90deg,
+          #5e6a77,
+          #313842
+        );
+      transform: rotate(44deg);
+      transform-origin: left center;
+    }
+
+    .lens-text {
+      width: 120px;
+      text-align: center;
+      color: #202b38;
+      font-size: 23px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-shadow: 0 0 12px rgba(72,151,255,0.25);
+    }
+
+    .lens-ring {
+      position: absolute;
+      inset: 13px;
+      border-radius: 50%;
+      border: 1px solid rgba(53,121,232,0.26);
+      box-shadow: inset 0 0 22px rgba(53,121,232,0.08);
+    }
+
+    /* =====================================
+       PERMISSIONS
+       ===================================== */
+
+    .permissions {
+      margin: 5px 0 42px;
+      padding: 22px;
+      border-radius: 22px;
+      background: var(--dark);
+      box-shadow: 0 16px 40px rgba(20,24,31,0.13);
+    }
+
+    .permissions-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 16px;
+      color: white;
+    }
+
+    .permissions-head small {
+      display: block;
+      margin-bottom: 4px;
+      color: #7f8896;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+    }
+
+    .permissions-head strong {
+      font-size: 16px;
+    }
+
+    .permission-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .permission {
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.045);
+    }
+
+    .permission code {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .permission:nth-child(1) code {
+      color: #83b8ff;
+    }
+
+    .permission:nth-child(2) code {
+      color: #72ced9;
+    }
+
+    .permission:nth-child(3) code {
+      color: #a39aff;
+    }
+
+    .permission p {
+      margin: 0;
+      color: #9ca5b2;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* =====================================
+       QUICK SUMMARY
+       ===================================== */
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 42px;
+    }
+
+    .quick-card {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+    }
+
+    .quick-card:nth-child(2) {
+      background: var(--blue-soft);
+    }
+
+    .quick-card:nth-child(3) {
+      background: var(--cyan-soft);
+    }
+
+    .quick-card:nth-child(4) {
+      background: var(--indigo-soft);
+    }
+
+    .quick-card small {
+      display: block;
+      margin-bottom: 8px;
+      color: #87909c;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .quick-card strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .quick-card p {
+      margin: 0;
+      color: #717a86;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    /* =====================================
+       MAIN LAYOUT
+       ===================================== */
+
+    .policy-layout {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 44px;
+      align-items: start;
+      padding-bottom: 80px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 22px;
+    }
+
+    .sidebar-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--paper);
+    }
+
+    .sidebar-head {
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sidebar-head small {
+      display: block;
+      margin-bottom: 5px;
+      color: #9299a4;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .sidebar-head strong {
+      font-size: 15px;
+    }
+
+    .focus-scale {
+      padding: 11px;
+    }
+
+    .focus-scale a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 10px 9px 31px;
+      border-radius: 9px;
+      color: #747d89;
+      font-size: 12px;
+    }
+
+    .focus-scale a::before {
+      content: "";
+      position: absolute;
+      left: 12px;
+      width: 9px;
+      height: 1px;
+      background: #9ba6b3;
+    }
+
+    .focus-scale a:nth-child(4n)::before {
+      width: 15px;
+      background: var(--blue);
+    }
+
+    .focus-scale a:hover {
+      color: var(--blue);
+      background: #f5f8fd;
+    }
+
+    .sidebar-note {
+      margin-top: 15px;
+      padding: 17px;
+      border-radius: 15px;
+      background: var(--dark);
+      color: #a7afba;
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .content {
+      min-width: 0;
+    }
+
+    .intro {
+      margin-bottom: 18px;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(53,121,232,0.06),
+          rgba(88,185,200,0.04)
+        ),
+        var(--paper);
+    }
+
+    .intro small {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .intro h2 {
+      margin: 0 0 13px;
+      font-size: 29px;
+      letter-spacing: -0.035em;
+    }
+
+    .intro p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =====================================
+       POLICY SECTIONS
+       ===================================== */
+
+    .section {
+      position: relative;
+      margin-bottom: 15px;
+      padding: 29px 31px 29px 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: 28px;
+      width: 6px;
+      height: 46px;
+      border-radius: 0 5px 5px 0;
+      background: var(--blue);
+    }
+
+    .section:nth-of-type(3n + 2)::before {
+      background: var(--cyan);
+    }
+
+    .section:nth-of-type(3n + 3)::before {
+      background: var(--indigo);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 15px;
+    }
+
+    .section-num {
+      display: grid;
+      place-items: center;
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(53,121,232,0.17);
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .section:nth-of-type(3n + 2) .section-num {
+      color: #328593;
+      background: var(--cyan-soft);
+    }
+
+    .section:nth-of-type(3n + 3) .section-num {
+      color: #6258bd;
+      background: var(--indigo-soft);
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.025em;
+    }
+
+    .section h3 {
+      margin: 24px 0 8px;
+      font-size: 16px;
+    }
+
+    .section p {
+      margin: 11px 0;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+
+    .section ul {
+      margin: 13px 0;
+      padding-left: 22px;
+    }
+
+    .section li {
+      margin: 7px 0;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 11px;
+      margin: 19px 0;
+    }
+
+    .info-box {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fafbfc;
+    }
+
+    .info-box strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+    }
+
+    .info-box span {
+      color: #828b96;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .callout {
+      margin: 19px 0;
+      padding: 18px 20px;
+      border-left: 4px solid var(--blue);
+      border-radius: 0 14px 14px 0;
+      background: var(--blue-soft);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #356cb7;
+      font-size: 13px;
+    }
+
+    .callout p {
+      margin: 0;
+      color: #667c9b;
+      font-size: 13px;
+    }
+
+    .warning {
+      border-left-color: var(--indigo);
+      background: var(--indigo-soft);
+    }
+
+    .warning strong {
+      color: #5d55aa;
+    }
+
+    .warning p {
+      color: #76709b;
+    }
+
+    .permission-table {
+      overflow: hidden;
+      margin: 19px 0;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .permission-row {
+      display: grid;
+      grid-template-columns: 165px minmax(0, 1fr);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .permission-row:last-child {
+      border-bottom: 0;
+    }
+
+    .permission-row strong,
+    .permission-row span {
+      padding: 14px 16px;
+      font-size: 13px;
+    }
+
+    .permission-row strong {
+      background: #f7f9fb;
+    }
+
+    .permission-row span {
+      color: var(--muted);
+    }
+
+    footer {
+      margin-bottom: 35px;
+      padding: 27px 29px;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      border-radius: 18px;
+      background: var(--dark);
+      color: #8d96a2;
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lens-stage {
+        max-width: 650px;
+      }
+
+      .permission-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .policy-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .focus-scale {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .shell {
+        width: min(100% - 20px, 1360px);
+      }
+
+      .hero {
+        padding: 50px 0 36px;
+      }
+
+      .hero h1 {
+        font-size: 52px;
+      }
+
+      .hero-copy {
+        font-size: 16px;
+      }
+
+      .quick-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .focus-scale {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .intro,
+      .section {
+        padding: 23px 20px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .permission-row {
+        grid-template-columns: 1fr;
+      }
+
+      .permission-row strong {
+        padding-bottom: 5px;
+      }
+
+      .permission-row span {
+        padding-top: 5px;
+      }
+
+      .lens {
+        right: 30px;
+        width: 155px;
+        height: 155px;
+      }
+
+      .lens-text {
+        width: 100px;
+        font-size: 19px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 470px) {
+      .focus-scale {
+        grid-template-columns: 1fr;
+      }
+
+      .top-meta {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+  <div class="shell topbar-inner">
+
+    <div class="brand">
+      <div class="brand-symbol"></div>
+      LensCraft
+    </div>
+
+    <div class="top-meta">
+      Privacy Policy · August 25, 2026
+    </div>
+
+  </div>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="shell">
+
+    <div class="hero-grid">
+
+      <div>
+
+        <div class="hero-label">
+          Browser Extension Privacy
+        </div>
+
+        <h1>
+          Focus on the<br>
+          <span>selected text.</span>
+        </h1>
+
+        <p class="hero-copy">
+          LensCraft adds a circular magnifying lens overlay that enlarges and
+          brightens text deliberately selected by the user. The extension is
+          activated from the browser's right-click context menu and uses
+          temporary access to the current tab to provide the requested
+          readability enhancement.
+        </p>
+
+        <div class="hero-tags">
+          <span>Circular magnifying lens</span>
+          <span>Selected text</span>
+          <span>Subtle glow ring</span>
+          <span>Right-click activation</span>
+          <span>Current active tab</span>
+          <span>User-triggered scripting</span>
+        </div>
+
+      </div>
+
+
+      <div class="lens-stage">
+
+        <div class="lens-stage-head">
+          <strong>LensCraft Preview</strong>
+          <span>Selected text focus</span>
+        </div>
+
+        <div class="page-preview">
+
+          <div class="mock-line"></div>
+          <div class="mock-line"></div>
+          <div class="mock-line"></div>
+
+          <div class="selected-text">
+            selected text becomes easier to read
+          </div>
+
+          <div class="mock-line" style="margin-top:22px;"></div>
+          <div class="mock-line"></div>
+
+          <div class="lens">
+
+            <div class="lens-ring"></div>
+
+            <div class="lens-text">
+              easier<br>to read
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="shell">
+
+  <section class="permissions">
+
+    <div class="permissions-head">
+
+      <div>
+        <small>Declared browser access</small>
+        <strong>Permissions used by LensCraft</strong>
+      </div>
+
+      <div>
+        <small>Last updated</small>
+        <strong>August 25, 2026</strong>
+      </div>
+
+    </div>
+
+
+    <div class="permission-grid">
+
+      <div class="permission">
+
+        <code>contextMenus</code>
+
+        <p>
+          Used to provide the LensCraft right-click action when the user chooses
+          to magnify selected text.
+        </p>
+
+      </div>
+
+
+      <div class="permission">
+
+        <code>activeTab</code>
+
+        <p>
+          Used only when the user invokes LensCraft on the currently active
+          browser tab.
+        </p>
+
+      </div>
+
+
+      <div class="permission">
+
+        <code>scripting</code>
+
+        <p>
+          Used to run LensCraft's declared magnifying overlay after the user
+          initiates an action.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="quick-grid">
+
+    <div class="quick-card">
+      <small>Primary purpose</small>
+      <strong>Selected Text Magnification</strong>
+      <p>
+        Enlarges and brightens text deliberately selected by the user.
+      </p>
+    </div>
+
+    <div class="quick-card">
+      <small>Activation</small>
+      <strong>Context Menu</strong>
+      <p>
+        LensCraft runs when the user chooses its right-click menu action.
+      </p>
+    </div>
+
+    <div class="quick-card">
+      <small>Tab access</small>
+      <strong>User Triggered</strong>
+      <p>
+        Access to the active page is associated with a deliberate user action.
+      </p>
+    </div>
+
+    <div class="quick-card">
+      <small>Purpose</small>
+      <strong>Readability Enhancement</strong>
+      <p>
+        The overlay is intended to improve visibility of selected text.
+      </p>
+    </div>
+
+  </section>
+
+
+  <main class="policy-layout">
+
+    <aside class="sidebar">
+
+      <div class="sidebar-card">
+
+        <div class="sidebar-head">
+          <small>Focus scale</small>
+          <strong>Policy Sections</strong>
+        </div>
+
+        <nav class="focus-scale">
+
+          <a href="#overview">Overview</a>
+          <a href="#selected-text">Selected Text</a>
+          <a href="#permissions">Permissions</a>
+          <a href="#lens">Lens Overlay</a>
+          <a href="#page-access">Page Access</a>
+          <a href="#personal">Personal Data</a>
+          <a href="#tracking">Tracking</a>
+          <a href="#security">Security</a>
+          <a href="#third-party">Third Parties</a>
+          <a href="#control">User Control</a>
+          <a href="#changes">Changes</a>
+          <a href="#contact">Contact</a>
+
+        </nav>
+
+      </div>
+
+
+      <div class="sidebar-note">
+        LensCraft is designed around text deliberately selected by the user and
+        activated through a context-menu action rather than continuous
+        background page monitoring.
+      </div>
+
+    </aside>
+
+
+    <article class="content">
+
+      <section class="intro">
+
+        <small>Privacy summary</small>
+
+        <h2>
+          Magnification initiated by the user
+        </h2>
+
+        <p>
+          LensCraft uses a context-menu command, temporary active-tab access,
+          and user-triggered script execution to display a circular magnifying
+          lens around selected text. The selected text is processed as necessary
+          to provide the requested enlargement and brightness effect.
+        </p>
+
+      </section>
+
+
+      <section class="section" id="overview">
+
+        <div class="section-head">
+          <div class="section-num">01</div>
+          <h2>Scope of This Privacy Policy</h2>
+        </div>
+
+        <p>
+          This Privacy Policy explains how information is accessed, processed,
+          and handled when you install or use the LensCraft browser extension.
+        </p>
+
+        <p>
+          LensCraft provides a circular magnifying lens overlay that enlarges
+          and brightens text intentionally selected by the user.
+        </p>
+
+        <p>
+          The extension is activated through a browser right-click context menu
+          action and operates on the currently active tab after user
+          interaction.
+        </p>
+
+        <p>
+          This policy applies to LensCraft itself and does not govern unrelated
+          websites, browser vendors, operating systems, or independent
+          third-party services.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">02</div>
+          <h2>Single Purpose</h2>
+        </div>
+
+        <p>
+          LensCraft has a focused single purpose: improving the readability of
+          text deliberately selected by the user through a circular
+          magnification overlay.
+        </p>
+
+        <p>
+          Functionality reasonably related to this purpose may include:
+        </p>
+
+        <ul>
+          <li>Detecting text intentionally selected by the user;</li>
+          <li>Providing a right-click LensCraft action;</li>
+          <li>Creating a circular magnifying overlay;</li>
+          <li>Enlarging selected text;</li>
+          <li>Brightening the magnified area;</li>
+          <li>Displaying a subtle glow ring;</li>
+          <li>Positioning the lens near the selected content;</li>
+          <li>Updating the overlay as necessary; and</li>
+          <li>Removing the lens when the interaction ends.</li>
+        </ul>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">03</div>
+          <h2>No Account Required</h2>
+        </div>
+
+        <p>
+          LensCraft does not require users to create a dedicated personal
+          account in order to use its standard functionality.
+        </p>
+
+        <p>
+          Users do not need to provide a username, password, email address,
+          personal profile, or other identity information merely to magnify
+          selected text.
+        </p>
+
+      </section>
+
+
+      <section class="section" id="selected-text">
+
+        <div class="section-head">
+          <div class="section-num">04</div>
+          <h2>Selected Text</h2>
+        </div>
+
+        <p>
+          LensCraft operates on text that the user deliberately selects before
+          invoking the extension.
+        </p>
+
+        <p>
+          The selected content may be used to determine what text should be
+          displayed inside or beneath the magnifying overlay.
+        </p>
+
+        <p>
+          A typical LensCraft interaction may involve:
+        </p>
+
+        <ul>
+          <li>Selecting a word, sentence, or other text;</li>
+          <li>Opening the browser's right-click menu;</li>
+          <li>Choosing the LensCraft action;</li>
+          <li>Identifying the selected text;</li>
+          <li>Creating the circular lens overlay; and</li>
+          <li>Displaying an enlarged and brightened representation.</li>
+        </ul>
+
+        <div class="callout">
+
+          <strong>User-selected scope</strong>
+
+          <p>
+            LensCraft's core interaction is based on text deliberately selected
+            by the user rather than arbitrary page content chosen by the
+            extension.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">05</div>
+          <h2>Types of Selected Content</h2>
+        </div>
+
+        <p>
+          Depending on the webpage and the user's choice, selected text may
+          technically include:
+        </p>
+
+        <ul>
+          <li>Public webpage text;</li>
+          <li>Article content;</li>
+          <li>Descriptions;</li>
+          <li>Labels;</li>
+          <li>Instructions;</li>
+          <li>Notes;</li>
+          <li>Form text;</li>
+          <li>Messages; or</li>
+          <li>Other textual content deliberately selected by the user.</li>
+        </ul>
+
+        <p>
+          LensCraft does not need to decide independently which text should be
+          magnified. The user controls the selection.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">06</div>
+          <h2>Selected Text and Sensitive Information</h2>
+        </div>
+
+        <p>
+          Because the user controls what is selected, selected text could
+          technically contain personal, confidential, or sensitive
+          information.
+        </p>
+
+        <div class="warning callout">
+
+          <strong>
+            Avoid selecting unnecessary sensitive information
+          </strong>
+
+          <p>
+            Users should avoid invoking LensCraft on passwords, authentication
+            codes, private keys, financial credentials, government identifiers,
+            or other highly sensitive information unless there is a clear and
+            appropriate reason to do so.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <section class="section" id="permissions">
+
+        <div class="section-head">
+          <div class="section-num">07</div>
+          <h2>Browser Permissions</h2>
+        </div>
+
+        <p>
+          LensCraft declares browser permissions necessary to provide its
+          user-triggered magnification functionality.
+        </p>
+
+        <div class="permission-table">
+
+          <div class="permission-row">
+            <strong>contextMenus</strong>
+            <span>
+              Used to add LensCraft's right-click action so the user can
+              deliberately invoke the magnifying lens for selected text.
+            </span>
+          </div>
+
+          <div class="permission-row">
+            <strong>activeTab</strong>
+            <span>
+              Provides temporary access to the currently active tab after the
+              user invokes LensCraft.
+            </span>
+          </div>
+
+          <div class="permission-row">
+            <strong>scripting</strong>
+            <span>
+              Allows LensCraft to execute the code necessary to create, display,
+              update, or remove the magnifying overlay.
+            </span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">08</div>
+          <h2>contextMenus Permission</h2>
+        </div>
+
+        <p>
+          LensCraft uses the <strong>contextMenus</strong> permission to add a
+          LensCraft command to the browser's right-click menu.
+        </p>
+
+        <p>
+          This provides a clear user-controlled mechanism for activating the
+          extension.
+        </p>
+
+        <p>
+          LensCraft is not intended to automatically magnify arbitrary text
+          across every webpage without a relevant user action.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">09</div>
+          <h2>activeTab Permission</h2>
+        </div>
+
+        <p>
+          LensCraft uses the <strong>activeTab</strong> permission only in
+          connection with the user's interaction on the currently active
+          browser tab.
+        </p>
+
+        <p>
+          This temporary access allows LensCraft to identify the selected text
+          and display the requested magnification effect on that page.
+        </p>
+
+        <p>
+          The permission is intended to provide user-triggered access rather
+          than permanent access to all browsing activity.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">10</div>
+          <h2>scripting Permission</h2>
+        </div>
+
+        <p>
+          LensCraft uses the <strong>scripting</strong> permission to execute
+          code required for its declared magnifying-lens feature.
+        </p>
+
+        <p>
+          Script execution may be used to:
+        </p>
+
+        <ul>
+          <li>Identify the selected text or selection location;</li>
+          <li>Create the circular overlay;</li>
+          <li>Display enlarged text;</li>
+          <li>Apply brightness enhancement;</li>
+          <li>Render the glow ring;</li>
+          <li>Position the lens;</li>
+          <li>Update the overlay; and</li>
+          <li>Remove the LensCraft interface when appropriate.</li>
+        </ul>
+
+        <p>
+          This permission is intended to support the extension's disclosed
+          readability function rather than unrelated monitoring.
+        </p>
+
+      </section>
+
+
+      <section class="section" id="lens">
+
+        <div class="section-head">
+          <div class="section-num">11</div>
+          <h2>Circular Magnifying Lens</h2>
+        </div>
+
+        <p>
+          LensCraft creates a circular visual overlay that enlarges the text
+          selected by the user.
+        </p>
+
+        <p>
+          The lens may be positioned relative to the selected content so that
+          users can read the magnified version while remaining on the current
+          webpage.
+        </p>
+
+        <p>
+          The overlay is part of the extension's user interface and is intended
+          only to provide a temporary readability enhancement.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">12</div>
+          <h2>Text Enlargement</h2>
+        </div>
+
+        <p>
+          LensCraft may render selected text at a larger size inside the
+          magnifying lens.
+        </p>
+
+        <p>
+          Functional values used for magnification may include:
+        </p>
+
+        <div class="info-grid">
+
+          <div class="info-box">
+            <strong>Selected text</strong>
+            <span>
+              Determines what content is displayed in enlarged form.
+            </span>
+          </div>
+
+          <div class="info-box">
+            <strong>Selection position</strong>
+            <span>
+              Helps determine where the lens should appear.
+            </span>
+          </div>
+
+          <div class="info-box">
+            <strong>Magnification level</strong>
+            <span>
+              Determines the visual enlargement applied to the selected text.
+            </span>
+          </div>
+
+          <div class="info-box">
+            <strong>Overlay state</strong>
+            <span>
+              Determines whether the LensCraft interface is currently visible.
+            </span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">13</div>
+          <h2>Brightness Enhancement</h2>
+        </div>
+
+        <p>
+          LensCraft may brighten the magnified text or background within the
+          lens in order to improve visibility.
+        </p>
+
+        <p>
+          Brightness-related processing may include visual styling,
+          contrast adjustment, background treatment, opacity, or other
+          presentation properties.
+        </p>
+
+        <p>
+          These values are visual interface settings rather than personal
+          information.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">14</div>
+          <h2>Glow Ring</h2>
+        </div>
+
+        <p>
+          LensCraft displays a subtle glow ring around the circular magnifying
+          overlay.
+        </p>
+
+        <p>
+          The glow is a decorative and functional interface element intended to
+          distinguish the magnified area from the surrounding webpage.
+        </p>
+
+        <p>
+          Glow-related rendering may include color, opacity, blur, intensity,
+          and other visual properties.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">15</div>
+          <h2>Temporary Lens State</h2>
+        </div>
+
+        <p>
+          While LensCraft is active, the extension may temporarily maintain
+          information necessary to display the magnification interface.
+        </p>
+
+        <p>
+          Temporary functional state may include:
+        </p>
+
+        <ul>
+          <li>The selected text;</li>
+          <li>The position of the selection;</li>
+          <li>The lens position;</li>
+          <li>The enlarged text state;</li>
+          <li>Brightness or styling values;</li>
+          <li>Glow-ring properties;</li>
+          <li>Visibility state; and</li>
+          <li>Other temporary interface values.</li>
+        </ul>
+
+      </section>
+
+
+      <section class="section" id="page-access">
+
+        <div class="section-head">
+          <div class="section-num">16</div>
+          <h2>Interaction With the Active Webpage</h2>
+        </div>
+
+        <p>
+          LensCraft interacts with the currently active webpage in order to
+          identify user-selected text and display the magnifying overlay.
+        </p>
+
+        <p>
+          Such interaction is intended to be limited to what is reasonably
+          necessary to provide the requested readability enhancement.
+        </p>
+
+        <p>
+          LensCraft does not need to build a permanent archive of the webpage
+          simply to display a temporary magnifying lens.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">17</div>
+          <h2>Website Content</h2>
+        </div>
+
+        <p>
+          LensCraft may interact with page content because its purpose is to
+          magnify text selected directly on the webpage.
+        </p>
+
+        <p>
+          This does not mean the extension needs to collect or archive all text,
+          images, videos, documents, or other content appearing on the page.
+        </p>
+
+        <p>
+          The extension's disclosed purpose is centered on the specific text
+          deliberately selected by the user.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">18</div>
+          <h2>Browsing History</h2>
+        </div>
+
+        <p>
+          LensCraft does not require a complete history of websites visited by
+          the user in order to magnify selected text.
+        </p>
+
+        <p>
+          The extension is not designed to maintain a browsing-history profile
+          for advertising, behavioral analysis, or unrelated commercial
+          purposes.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">19</div>
+          <h2>Search History</h2>
+        </div>
+
+        <p>
+          General search-engine history is not required for LensCraft's
+          magnification functionality.
+        </p>
+
+        <p>
+          Search queries performed on unrelated websites are not necessary for
+          rendering the circular lens.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">20</div>
+          <h2>Forms and Editable Fields</h2>
+        </div>
+
+        <p>
+          LensCraft may technically be invoked on text contained in an editable
+          field when the user deliberately selects that text and chooses the
+          LensCraft context-menu action.
+        </p>
+
+        <p>
+          The extension is not intended to automatically collect every value
+          entered into webpage forms simply because LensCraft is installed.
+        </p>
+
+        <p>
+          Users should exercise particular care when selecting text inside:
+        </p>
+
+        <ul>
+          <li>Login forms;</li>
+          <li>Payment forms;</li>
+          <li>Medical forms;</li>
+          <li>Private messages;</li>
+          <li>Account-management interfaces; or</li>
+          <li>Other sensitive input areas.</li>
+        </ul>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">21</div>
+          <h2>Keystrokes</h2>
+        </div>
+
+        <p>
+          LensCraft is not designed to operate as a keystroke logger.
+        </p>
+
+        <p>
+          The extension does not need to continuously record keyboard activity
+          across unrelated websites in order to provide its core functionality.
+        </p>
+
+        <p>
+          LensCraft is centered on text deliberately selected by the user.
+        </p>
+
+      </section>
+
+
+      <section class="section" id="personal">
+
+        <div class="section-head">
+          <div class="section-num">22</div>
+          <h2>Personal Information</h2>
+        </div>
+
+        <p>
+          LensCraft does not require users to submit personal identity
+          information in order to use its standard functionality.
+        </p>
+
+        <p>
+          Users are not required to provide:
+        </p>
+
+        <ul>
+          <li>Full name;</li>
+          <li>Email address;</li>
+          <li>Telephone number;</li>
+          <li>Postal address;</li>
+          <li>Government identification information;</li>
+          <li>Bank account details;</li>
+          <li>Payment-card information;</li>
+          <li>Passwords; or</li>
+          <li>Authentication credentials.</li>
+        </ul>
+
+        <p>
+          However, because users decide what text to select, selected text could
+          technically contain personal information.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">23</div>
+          <h2>Sensitive Personal Information</h2>
+        </div>
+
+        <p>
+          LensCraft does not require sensitive personal information in order to
+          provide its standard magnification functionality.
+        </p>
+
+        <p>
+          Users should avoid deliberately selecting highly sensitive content
+          where doing so is unnecessary.
+        </p>
+
+        <p>
+          Examples include:
+        </p>
+
+        <ul>
+          <li>Passwords;</li>
+          <li>Authentication codes;</li>
+          <li>Private cryptographic keys;</li>
+          <li>Financial credentials;</li>
+          <li>Government identification numbers;</li>
+          <li>Confidential medical information; and</li>
+          <li>Other highly sensitive private information.</li>
+        </ul>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">24</div>
+          <h2>Authentication Information</h2>
+        </div>
+
+        <p>
+          LensCraft does not require passwords, security codes, login tokens,
+          private keys, or other authentication credentials to provide its
+          standard functionality.
+        </p>
+
+        <p>
+          Users should avoid selecting authentication secrets for magnification
+          unless there is a legitimate and appropriate need.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">25</div>
+          <h2>Financial Information</h2>
+        </div>
+
+        <p>
+          LensCraft does not require bank-account information, payment-card
+          numbers, transaction credentials, or financial authentication data to
+          provide its magnifying overlay.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">26</div>
+          <h2>Geographic Location</h2>
+        </div>
+
+        <p>
+          LensCraft does not require precise geographic location information to
+          magnify selected text.
+        </p>
+
+        <p>
+          The extension is not designed to track the physical location or
+          movements of users.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">27</div>
+          <h2>Camera and Microphone</h2>
+        </div>
+
+        <p>
+          LensCraft does not require camera or microphone access for its
+          standard text-magnification functionality.
+        </p>
+
+        <p>
+          The circular lens is rendered digitally and does not require captured
+          video, voice, or ambient sound.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">28</div>
+          <h2>Private Communications</h2>
+        </div>
+
+        <p>
+          LensCraft is not designed to automatically read private emails,
+          messages, chats, or other communications.
+        </p>
+
+        <p>
+          If a user deliberately selects text within a private communication and
+          invokes LensCraft, that selected text may be processed as necessary to
+          render the requested magnification.
+        </p>
+
+        <p>
+          Users should consider the confidentiality of the text before invoking
+          the extension.
+        </p>
+
+      </section>
+
+
+      <section class="section" id="tracking">
+
+        <div class="section-head">
+          <div class="section-num">29</div>
+          <h2>Advertising</h2>
+        </div>
+
+        <p>
+          LensCraft is not intended to use selected text, context-menu actions,
+          magnification activity, or active-tab access for targeted advertising.
+        </p>
+
+        <p>
+          Browser permissions are intended to support the disclosed readability
+          enhancement.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">30</div>
+          <h2>No Sale of Personal Information</h2>
+        </div>
+
+        <p>
+          LensCraft does not operate as a data brokerage service.
+        </p>
+
+        <p>
+          Information processed in connection with the magnifying-lens feature
+          is not intended to be sold to advertisers, marketing organizations,
+          or data brokers.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">31</div>
+          <h2>User Profiling</h2>
+        </div>
+
+        <p>
+          LensCraft is not designed to analyze selected text in order to build
+          unrelated behavioral, demographic, financial, advertising, employment,
+          or insurance profiles.
+        </p>
+
+        <p>
+          Selected text is relevant because the user has requested that it be
+          magnified.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">32</div>
+          <h2>Cross-Site Tracking</h2>
+        </div>
+
+        <p>
+          LensCraft is not designed to track users across unrelated websites.
+        </p>
+
+        <p>
+          The <strong>activeTab</strong> permission provides temporary access
+          associated with the user's current action rather than persistent
+          cross-site monitoring.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">33</div>
+          <h2>Cookies</h2>
+        </div>
+
+        <p>
+          LensCraft does not require advertising cookies to provide its core
+          magnification functionality.
+        </p>
+
+        <p>
+          Websites independently visited by users may use their own cookies and
+          tracking technologies. Those technologies are controlled by the
+          respective websites.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">34</div>
+          <h2>Analytics</h2>
+        </div>
+
+        <p>
+          LensCraft does not require selected text to be used for behavioral
+          advertising analytics in order to provide its standard functionality.
+        </p>
+
+        <p>
+          If a future version materially changes diagnostic or analytics
+          practices, this Privacy Policy may be updated to accurately describe
+          those practices.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">35</div>
+          <h2>Data Minimization</h2>
+        </div>
+
+        <p>
+          LensCraft is designed around the principle that browser access should
+          be limited to what is reasonably necessary to provide the extension's
+          disclosed purpose.
+        </p>
+
+        <p>
+          Its design uses a user-selected text interaction, a deliberate
+          context-menu command, and temporary active-tab access.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">36</div>
+          <h2>Purpose Limitation</h2>
+        </div>
+
+        <p>
+          Information processed by LensCraft is intended to be used only to
+          provide, maintain, improve, or secure its disclosed text-magnification
+          functionality.
+        </p>
+
+        <p>
+          Such information is not intended to be repurposed for unrelated
+          surveillance, advertising profiling, credit scoring, employment
+          screening, insurance decisions, or data brokerage.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">37</div>
+          <h2>Data Retention</h2>
+        </div>
+
+        <p>
+          LensCraft may maintain selected-text and overlay information
+          temporarily while the magnifying interaction is active.
+        </p>
+
+        <p>
+          The extension is not designed to maintain an unnecessary permanent
+          remote archive of every piece of text a user magnifies as part of its
+          standard functionality.
+        </p>
+
+        <p>
+          If future versions materially change data-retention practices, this
+          Privacy Policy should be updated accordingly.
+        </p>
+
+      </section>
+
+
+      <section class="section" id="security">
+
+        <div class="section-head">
+          <div class="section-num">38</div>
+          <h2>Data Security</h2>
+        </div>
+
+        <p>
+          LensCraft is designed to minimize unnecessary browser access and
+          information processing.
+        </p>
+
+        <p>
+          Limiting the extension to user-triggered interactions helps reduce
+          unnecessary privacy and security exposure.
+        </p>
+
+        <p>
+          However, no browser extension, browser, operating system, device,
+          network, or electronic environment can be guaranteed to be completely
+          secure.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">39</div>
+          <h2>No Continuous Background Monitoring</h2>
+        </div>
+
+        <p>
+          LensCraft does not need to continuously monitor unrelated browsing
+          behavior in order to provide its disclosed magnification feature.
+        </p>
+
+        <p>
+          Its operation is centered on deliberate text selection and a
+          user-initiated context-menu action.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">40</div>
+          <h2>Automated Visual Processing</h2>
+        </div>
+
+        <p>
+          LensCraft automatically performs visual operations necessary to
+          create the magnifying lens.
+        </p>
+
+        <p>
+          These operations may include:
+        </p>
+
+        <ul>
+          <li>Reading the current text selection;</li>
+          <li>Determining selection coordinates;</li>
+          <li>Calculating lens position;</li>
+          <li>Rendering enlarged text;</li>
+          <li>Applying brightness or contrast styling;</li>
+          <li>Rendering the glow ring; and</li>
+          <li>Removing the visual overlay when appropriate.</li>
+        </ul>
+
+        <p>
+          Such automated processing is limited to the extension's readability
+          functionality.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">41</div>
+          <h2>Readability and Accessibility Purpose</h2>
+        </div>
+
+        <p>
+          LensCraft is intended to make selected text easier to inspect by
+          increasing its visual size and brightness.
+        </p>
+
+        <p>
+          It may be useful for users who want a temporary closer view of
+          specific text without changing the entire webpage zoom level.
+        </p>
+
+        <p>
+          LensCraft does not claim to replace dedicated accessibility software,
+          assistive technology, medical devices, or professional vision care.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">42</div>
+          <h2>No Remote-Processing Assumption</h2>
+        </div>
+
+        <p>
+          LensCraft's described functionality can be implemented through
+          browser-side processing of selected text and visual overlay rendering.
+        </p>
+
+        <p>
+          This policy should not be interpreted as authorizing undisclosed
+          transmission of selected text to external services.
+        </p>
+
+        <div class="warning callout">
+
+          <strong>
+            Keep this disclosure aligned with the actual extension
+          </strong>
+
+          <p>
+            If a future version sends selected text to an external server or
+            third-party service, this Privacy Policy should be updated to
+            disclose the recipient, purpose, transmitted information, and
+            applicable retention practices.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <section class="section" id="third-party">
+
+        <div class="section-head">
+          <div class="section-num">43</div>
+          <h2>Third-Party Websites</h2>
+        </div>
+
+        <p>
+          LensCraft may be used while users browse third-party websites, but
+          those websites remain independent from the extension.
+        </p>
+
+        <p>
+          This Privacy Policy does not govern their cookies, analytics systems,
+          tracking technologies, content practices, or privacy policies.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">44</div>
+          <h2>Browser Platforms</h2>
+        </div>
+
+        <p>
+          LensCraft operates within a browser environment provided by a browser
+          vendor.
+        </p>
+
+        <p>
+          Browser vendors may independently process technical information
+          associated with extension installation, updates, security, crashes,
+          or extension management according to their own privacy policies.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">45</div>
+          <h2>Chrome Web Store and Extension Marketplaces</h2>
+        </div>
+
+        <p>
+          If LensCraft is distributed through the Chrome Web Store or another
+          browser extension marketplace, installation and update processes may
+          be managed by that platform.
+        </p>
+
+        <p>
+          LensCraft is intended to use browser permissions only for purposes
+          directly related to its disclosed text-magnification functionality.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">46</div>
+          <h2>Children's Privacy</h2>
+        </div>
+
+        <p>
+          LensCraft is a general-purpose readability utility and is not
+          specifically designed for the purpose of collecting personal
+          information from children.
+        </p>
+
+        <p>
+          Standard functionality does not require users to create a dedicated
+          personal account.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">47</div>
+          <h2>International Users</h2>
+        </div>
+
+        <p>
+          LensCraft may be available to users in multiple countries and
+          regions.
+        </p>
+
+        <p>
+          The extension is designed around limited, user-triggered browser
+          access regardless of the user's location.
+        </p>
+
+        <p>
+          Users remain responsible for using LensCraft in accordance with laws
+          applicable in their jurisdiction.
+        </p>
+
+      </section>
+
+
+      <section class="section" id="control">
+
+        <div class="section-head">
+          <div class="section-num">48</div>
+          <h2>User Choice and Control</h2>
+        </div>
+
+        <p>
+          Users decide which text to select and when LensCraft should run.
+        </p>
+
+        <p>
+          LensCraft is activated through a deliberate context-menu action chosen
+          by the user.
+        </p>
+
+        <p>
+          A user may avoid processing text simply by not invoking LensCraft on
+          that selection.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">49</div>
+          <h2>Closing the Magnifying Lens</h2>
+        </div>
+
+        <p>
+          Users may close or dismiss the LensCraft overlay using the controls or
+          behavior provided by the extension.
+        </p>
+
+        <p>
+          Ending the magnification interaction removes the need to continue
+          displaying the corresponding temporary lens state.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">50</div>
+          <h2>Removing LensCraft</h2>
+        </div>
+
+        <p>
+          Users may disable or uninstall LensCraft at any time through their
+          browser's extension-management interface.
+        </p>
+
+        <p>
+          After removal, LensCraft will no longer be able to provide its
+          context-menu magnification feature within that browser.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">51</div>
+          <h2>No Unrelated Commercial Use</h2>
+        </div>
+
+        <p>
+          Selected text, lens interactions, context-menu actions, and
+          magnification state are not intended to be used to create unrelated
+          marketing databases or behavioral advertising audiences.
+        </p>
+
+      </section>
+
+
+      <section class="section" id="changes">
+
+        <div class="section-head">
+          <div class="section-num">52</div>
+          <h2>Changes to LensCraft</h2>
+        </div>
+
+        <p>
+          LensCraft may evolve over time to improve magnification quality,
+          positioning, glow effects, text rendering, accessibility, usability,
+          performance, or browser compatibility.
+        </p>
+
+        <p>
+          Future functionality may remain consistent with the extension's
+          primary selected-text readability purpose.
+        </p>
+
+        <p>
+          If a future release materially changes how user information is
+          accessed, processed, stored, transmitted, or shared, this Privacy
+          Policy may be updated accordingly.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">53</div>
+          <h2>Changes to This Privacy Policy</h2>
+        </div>
+
+        <p>
+          This Privacy Policy may be revised periodically to reflect changes to
+          LensCraft, browser marketplace requirements, technical implementation,
+          privacy practices, or applicable laws.
+        </p>
+
+        <p>
+          When this Privacy Policy is updated, the "Last updated" date displayed
+          on this page will be revised.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">54</div>
+          <h2>Legal Requirements</h2>
+        </div>
+
+        <p>
+          Information may be disclosed where reasonably necessary to comply
+          with applicable law, regulation, court order, legal process, or a
+          valid governmental request.
+        </p>
+
+        <p>
+          Nothing in this Privacy Policy is intended to prevent compliance with
+          applicable legal obligations.
+        </p>
+
+      </section>
+
+
+      <section class="section" id="contact">
+
+        <div class="section-head">
+          <div class="section-num">55</div>
+          <h2>Contact</h2>
+        </div>
+
+        <p>
+          If you have questions, concerns, or requests regarding this Privacy
+          Policy or LensCraft's privacy practices, please contact the developer
+          using the contact information provided on the extension's official
+          browser store listing or official website.
+        </p>
+
+        <p>
+          Please do not include passwords, financial credentials,
+          authentication tokens, government identification numbers, or other
+          unnecessary sensitive information in privacy-related communications.
+        </p>
+
+      </section>
+
+
+      <section class="section">
+
+        <div class="section-head">
+          <div class="section-num">56</div>
+          <h2>Acceptance of This Privacy Policy</h2>
+        </div>
+
+        <p>
+          By installing or using LensCraft, you acknowledge that you have had an
+          opportunity to review this Privacy Policy.
+        </p>
+
+        <p>
+          If you do not wish to use LensCraft under the practices described in
+          this policy, you may discontinue use and uninstall the extension from
+          your browser.
+        </p>
+
+      </section>
+
+    </article>
+
+  </main>
+
+
+  <footer>
+
+    <div>
+      <strong>LensCraft</strong><br>
+      Circular magnification · selected text · readability enhancement
+    </div>
+
+    <div>
+      Privacy Policy · Last updated August 25, 2026
+    </div>
+
+  </footer>
+
+</div>
+
+</body>
+</html>
